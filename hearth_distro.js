@@ -35,6 +35,22 @@ Player.prototype.lose = function() {
   this.index+=1;
 }
 
+/**
+ * For sorting an array of player indexes from lowest to highest by wins then loses
+ * @return int > 0 if index1 comes after index2
+ *         int < 0 if index2 comes after index1
+ * @throws exception if they are equal
+ */
+Player.prototype.sort = function( index1, index2 ){
+  var player1 = new Player( index1 ),
+      player2 = new Player( index2 ),
+      wins  = player1.wins  - player2.wins,
+      loses = player1.loses - player2.loses;
+  if( wins  !== 0 ) return wins;
+  if( loses !== 0 ) return loses;
+  throw "comparing two equal buckets "+ a + " " +b;
+}
+
 
 /**
  * This is the organizational object for our toury
@@ -133,15 +149,7 @@ Org.prototype.battle = function( index ) {
  */
 Org.prototype.toString = function() {
   var indexes = Object.keys(this.bins);
-  indexes.sort(function( index1, index2 ){
-    var player1 = new Player( index1 ),
-        player2 = new Player( index2 ),
-        wins  = player1.wins  - player2.wins,
-        loses = player1.loses - player2.loses;
-    if( wins  !== 0 ) return wins;
-    if( loses !== 0 ) return loses;
-    throw "comparing two equal buckets "+ a + " " +b;
-  });
+  indexes.sort(Player.prototype.sort);
   var s = "";
   var percentile = 0;
   for( var a=0; a<indexes.length; a++ ) {
