@@ -45,7 +45,7 @@ Player.prototype.sort = function( index1, index2 ){
   var player1 = new Player( index1 ),
       player2 = new Player( index2 ),
       wins  = player1.wins  - player2.wins,
-      loses = player1.loses - player2.loses;
+      loses = player2.loses - player1.loses;
   if( wins  !== 0 ) return wins;
   if( loses !== 0 ) return loses;
   throw "comparing two equal buckets "+ a + " " +b;
